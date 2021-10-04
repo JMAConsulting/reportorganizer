@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<table>
+  <base>CRM/Reportorganizer</base>
+  <class>ReportOrganizer</class>
+  <name>civicrm_report_instance_organizer</name>
+  <comment>Table that contains the sections for report instances</comment>
+  <log>true</log>
+
+  <field>
+    <name>id</name>
+    <type>int unsigned</type>
+    <required>true</required>
+    <comment>Unique ReportOrganizer ID</comment>
+  </field>
+  <primaryKey>
+    <name>id</name>
+    <autoincrement>true</autoincrement>
+  </primaryKey>
+
+  <field>
+    <name>component_id</name>
+    <type>int unsigned</type>
+    <comment>FK to CiviCRM Component</comment>
+  </field>
+  <foreignKey>
+    <name>component_id</name>
+    <table>civicrm_component</table>
+    <key>id</key>
+    <onDelete>CASCADE</onDelete>
+  </foreignKey>
+
+  <field>
+    <name>section_id</name>
+    <type>int unsigned</type>
+    <comment>Pseudo FK to civicrm_option.value WHERE option_group = report_template</comment>
+  </field>
+
+  <field>
+    <name>report_instance_id</name>
+    <type>int unsigned</type>
+    <comment>FK to CiviCRM Report Instance</comment>
+  </field>
+  <foreignKey>
+    <name>report_instance_id</name>
+    <table>civicrm_report_instance</table>
+    <key>id</key>
+    <onDelete>CASCADE</onDelete>
+  </foreignKey>
+
+  <index>
+    <name>UI_component_id_section_id_report_instance_id</name>
+    <fieldName>component_id</fieldName>
+    <fieldName>section_id</fieldName>
+    <fieldName>report_instance_id</fieldName>
+    <unique>true</unique>
+  </index>
+
+</table>
