@@ -1,19 +1,4 @@
 <?php
-/*
- +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC. All rights reserved.                        |
- |                                                                    |
- | This work is published under the GNU AGPLv3 license with some      |
- | permitted exceptions and without any warranty. For full license    |
- | and copyright information, see https://civicrm.org/licensing       |
- +--------------------------------------------------------------------+
- */
-
-/**
- *
- * @package CRM
- * @copyright CiviCRM LLC https://civicrm.org/licensing
- */
 
 /**
  * Page for invoking report instances.
@@ -131,6 +116,7 @@ class CRM_Reportorganizer_Page_ReportInstanceList extends CRM_Core_Page {
     $rows = [];
     $url = 'civicrm/report/instance';
     $my_reports_grouping = 'My';
+    $sectionLabels = CRM_Core_OptionGroup::values('component_section');
     while ($dao->fetch()) {
       if (in_array($dao->report_id, self::$_exceptions)) {
         continue;
@@ -164,10 +150,6 @@ class CRM_Reportorganizer_Page_ReportInstanceList extends CRM_Core_Page {
         if ($dao->owner_id != NULL) {
           $report_grouping = $my_reports_grouping;
         }
-        $sectionLabels = CRM_Core_OptionGroup::values('component_section');
-        if (empty($dao->component_id) && !empty($dao->section_id)) {
-
-        }
         $report_sub_grouping = NULL;
         if ($dao->section_id) {
           $report_sub_grouping = $sectionLabels[$dao->section_id];
@@ -200,7 +182,7 @@ class CRM_Reportorganizer_Page_ReportInstanceList extends CRM_Core_Page {
       if (!empty($row['accordion'])) {
         $accordion = $row['accordion'];
         unset($row['accordion']);
-        $row = $accordion + $row['no_accordion'];
+        $row = ['accordion' => $accordion] + $row;
       }
     }
     return $rows;

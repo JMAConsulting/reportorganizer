@@ -6,4 +6,10 @@
     <title>ReportInstanceList</title>
     <access_arguments>access CiviCRM</access_arguments>
   </item>
+  <item>
+    <path>civicrm/admin/report/template/list</path>
+    <page_callback>CRM_Reportorganizer_Page_ReportTemplateList</page_callback>
+    <title>ReportTemplateList</title>
+    <access_arguments>access CiviCRM</access_arguments>
+  </item>
 </menu>

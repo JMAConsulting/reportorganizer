@@ -20,7 +20,7 @@
         <div class="crm-block crm-form-block crm-report-instanceList-form-block">
             {counter start=0 skip=1 print=false}
             {foreach from=$list item=comrows key=comreport}
-                <div class="crm-accordion-wrapper crm-accordion_{$report}-accordion ">
+                <div class="crm-accordion-wrapper crm-accordion_{$comreport}-accordion ">
                     <div class="crm-accordion-header">
                         {if isset($title)}{$title}{elseif $comreport EQ 'Contribute'}{ts}Contribution Reports{/ts}{else}{ts 1=$comreport}%1 Reports{/ts}{/if}
                     </div><!-- /.crm-accordion-header -->
@@ -71,7 +71,7 @@
                                                       <ul class="panel">
                                                         {foreach from=$row.actions item=action key=action_name}
                                                           <li><a href="{$action.url}" class="{$action_name} action-item crm-hover-button small-popup"
-                                                          {if $action.confirm_message}onclick="return window.confirm({$action.confirm_message|json_encode|htmlspecialchars})"{/if}
+                                                          {if !empty($action.confirm_message)}onclick="return window.confirm({$action.confirm_message|json_encode|htmlspecialchars})"{/if}
                                                                  title="{$action.label|escape}">{$action.label}</a></li>
                                                         {/foreach}
                                                       </ul>

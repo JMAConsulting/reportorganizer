@@ -1,6 +1,7 @@
 <?php
 
 require_once 'reportorganizer.civix.php';
+require_once 'CRM/Reportorganizer/Utils.php';
 // phpcs:disable
 use CRM_Reportorganizer_ExtensionUtil as E;
 use CRM_Reportorganizer_Utils as R;
@@ -40,6 +41,32 @@ function reportorganizer_civicrm_install() {
   }
   R::renameReportInstances();
   R::renameReportTemplates();
+  $templateCheck = civicrm_api3('OptionGroup', 'get', ['name' => 'component_template_section']);
+  if (empty($templateCheck['values'])) {
+    civicrm_api3('OptionGroup', 'create', [
+      'name' => "component_template_section",
+      'title' => "Component Report Template Section",
+      'is_reserved' => 1,
+      'is_active' => 1,
+      'is_locked' => 1,
+    ]);
+    civicrm_api3('OptionValue', 'create', [
+      'option_group_id' => "component_template_section",
+    ]);
+  }
+  $instanceCheck = civicrm_api3('OptionGroup', 'get', ['name' => 'component_section']);
+  if (empty($instanceCheck['values'])) {
+    civicrm_api3('OptionGroup', 'create', [
+      'name' => "component_section",
+      'title' => "Component Report Instance Section",
+      'is_reserved' => 1,
+      'is_active' => 1,
+      'is_locked' => 1,
+    ]);
+    civicrm_api3('OptionValue', 'create', [
+      'option_group_id' => "component_section",
+    ]);
+  }
   _reportorganizer_civix_civicrm_install();
 }
 
@@ -67,6 +94,7 @@ function reportorganizer_civicrm_uninstall() {
  * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_enable
  */
 function reportorganizer_civicrm_enable() {
+  CRM_Core_Invoke::rebuildMenuAndCaches( );
   _reportorganizer_civix_civicrm_enable();
 }
 

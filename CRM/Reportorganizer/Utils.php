@@ -199,18 +199,66 @@ class CRM_Reportorganizer_Utils {
       ],
       // Relationship Reports
       "Relationship Report" => [
-        "label" => "",
-        "description" => "",
+        "label" => "Relationships",
+        "description" => "All Relationships",
       ],
       "Current Employer Report" => [
-        "label" => "",
-        "description" => "",
+        "label" => "Current Employer",
+        "description" => "All Employer/Employee Relationships",
       ],
       "Extended Report - Relationships" => [
-        "label" => "",
-        "description" => "",
+        "label" => "Relationships (Detailed)",
+        "description" => "All Relationships with extra fields",
+      ],
+      // Mailing Reports
+      "Mail Bounce Report" => [
+        "label" => "Mail Bounces",
+        "description" => "All Mailings with Bounce activity",
+      ],
+      "Mail Summary Report" => [
+        "label" => "Mail (Summary)",
+        "description" => "All DMS Mailings statistics",
+      ],
+      "Mail Opened Report" => [
+        "label" => "Mail Opened",
+        "description" => "All Contacts who opened emails from a Mailing",
+      ],
+      "Mail Click-Through Report" => [
+        "label" => "Mail Click-Through",
+        "description" => "All Mailings and Clicks Tracking",
+      ],
+      "Mail Detail Report" => [
+        "label" => "Mail (Detailed)",
+        "description" => "All Mailings with detailed information",
+      ],
+      // Opportunity Reports
+      "Opportunity Report (Detail)" => [
+        "label" => "Opportunity Report (Detailed)",
+        "description" => "All Opportunities",
+      ],
+      "Opportunity Report (Statistics)" => [
+        "label" => "Opportunity Report (Statistics)",
+        "description" => "All Opportunities in summaries",
+      ],
+      "Extended Report - Opportunity Detail" => [
+        "label" => "Opportunity (Detailed)",
+        "description" => "All Opportunities with detailed information",
       ],
     ];
+    foreach ($reportTemplates as $label => $change) {
+      $template = civicrm_api3("ReportTemplate", "get", [
+        "sequential" => 1,
+        "label" => $label,
+      ]);
+      if (!empty($template['values'])) {
+        civicrm_api3("ReportTemplate", "create", [
+          "label" => $change['label'],
+          "option_group_id" => "report_template",
+          "description" => $change['description'],
+          "id" => $template['values'][0]["id"],
+        ]);
+      }
+    }
   }
 }
 
