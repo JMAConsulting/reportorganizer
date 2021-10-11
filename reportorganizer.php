@@ -70,6 +70,32 @@ function reportorganizer_civicrm_install() {
   _reportorganizer_civix_civicrm_install();
 }
 
+function reportorganizer_civicrm_post($op, $objectName, $objectId, &$objectRef) {
+  if ($objectName == "ReportInstance") {
+    // Check to see if we have a match in our table.
+    $dao = new CRM_Reportorganizer_DAO_ReportOrganizer();
+    $dao->report_instance_id = $objectId;
+    $dao->find(TRUE);
+    if (empty($dao->id)) {
+      // We save this as a custom report.
+      // Get the component ID.
+      $componentId = CRM_Core_DAO::singleValueQuery("SELECT v.component_id
+        FROM civicrm_report_instance r
+        INNER JOIN civicrm_option_value v ON v.value = r.report_id
+        INNER JOIN civicrm_option_group g ON g.id = v.option_group_id AND g.name = 'report_template'
+        WHERE r.id = %1", [1 => [$objectId, 'Integer']]);
+      if (!empty($componentId)) {
+        $dao->component_id = $componentId;
+        $dao->section_id = CRM_Core_DAO::singleValueQuery("SELECT v.value
+        FROM civicrm_option_value v
+        INNER JOIN civicrm_option_group g ON g.id = v.option_group_id AND g.name = 'component_section'
+        WHERE v.component_id = %1 AND v.label LIKE 'Custom%'", [1 => [$componentId, 'Integer']]);
+        $dao->report_instance_id = $objectId;
+      }
+    }
+  }
+}
+
 /**
  * Implements hook_civicrm_postInstall().
  *

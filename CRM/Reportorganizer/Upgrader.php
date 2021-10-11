@@ -13,7 +13,7 @@ class CRM_Reportorganizer_Upgrader extends CRM_Reportorganizer_Upgrader_Base {
    * Example: Run an external SQL script when the module is installed.
    *
   public function install() {
-    $this->executeSqlFile('sql/myinstall.sql');
+  $this->executeSqlFile('sql/myinstall.sql');
   }
 
   /**
@@ -24,15 +24,150 @@ class CRM_Reportorganizer_Upgrader extends CRM_Reportorganizer_Upgrader_Base {
    * created during the installation (e.g., a setting or a managed entity), do
    * so here to avoid order of operation problems.
    */
-  // public function postInstall() {
-  //  $customFieldId = civicrm_api3('CustomField', 'getvalue', array(
-  //    'return' => array("id"),
-  //    'name' => "customFieldCreatedViaManagedHook",
-  //  ));
-  //  civicrm_api3('Setting', 'create', array(
-  //    'myWeirdFieldSetting' => array('id' => $customFieldId, 'weirdness' => 1),
-  //  ));
-  // }
+  public function postInstall() {
+    // Add entries in component report instance section.
+    $contribComponent = CRM_Core_DAO::singleValueQuery("SELECT id FROM civicrm_component WHERE name = 'CiviContribute'");
+    $contactComponent = CRM_Core_DAO::singleValueQuery("SELECT id FROM civicrm_component WHERE name = 'CiviContact'");
+    $opportunityComponent = CRM_Core_DAO::singleValueQuery("SELECT id FROM civicrm_component WHERE name = 'CiviGrant'");
+
+    // Add entries in component report template section.
+    $templateSections = [
+      $contribComponent => [
+        "General Contribution Reports" => [
+          "Contributions (Summary)",
+          "Contributions (Detailed)",
+          "Repeat Contributions",
+          "Top Donors",
+          "SYBUNT",
+          "LYBNT",
+          "Contributions by Organization",
+          "Contributions by Household",
+          "Constributions by Relationship",
+          "Contributions for Bookkeeping",
+          "Contributions (Extended, Summary)",
+          "Contributions (Detailed)",
+          "Contributions (Extended, Pivot Chart)",
+          "Contributions (Extended, Extra Fields)",
+          "Contributions for Bookkeeping (Detailed)",
+        ],
+        "Recurring Contribution Reports" => [
+          "Recurring Contributions (Summary)",
+          "Recurring Contributions (Detailed)",
+          "Recurring Contributions (Extended, Pivot Chart)",
+          "Recurring Contributions (Detailed)",
+        ],
+        "Receipt Reports" => [
+          "Tax Receipts (Issued)",
+          "Tax Receipts (Not Yet Issued)",
+        ],
+      ],
+      $contactComponent => [
+        "General Contact Reports" => [
+          "Contacts (Summary)",
+          "Contacts (Detailled)",
+          "Contacts (Detailed)",
+          "Contacts (Extended, Pivot Chart)",
+          "Database Log",
+          "Address History",
+        ],
+        "Activity Reports" => [
+          "Activities (Summary)",
+          "Activities (Detailled)",
+          "Activities (Extended)",
+          "Activities (Extended, Pivot Chart)",
+          "Activities (Detailed)",
+        ],
+        "Relationship Reports" => [
+          "Relationships",
+          "Current Employer",
+          "Relationships (Detailed)",
+        ]
+      ],
+    ];
+    foreach ($templateSections as $component => $sectionHeader) {
+      foreach($sectionHeader as $reportTemplate) {
+        $optionVal = civicrm_api3('OptionValue', 'create', [
+          'option_group_id' => 'component_template_section',
+          'label' => $sectionHeader,
+          'component_id' => $component,
+        ]);
+        // Fetch the report template by label.
+        $template = civicrm_api3("ReportTemplate", "get", [
+          "sequential" => 1,
+          "label" => $reportTemplate,
+        ]);
+        if (!empty($optionVal['id']) && !empty($template['id'])) {
+          $dao = new CRM_Reportorganizer_BAO_ReportTemplateOrganizer();
+          $dao->component_id = $component;
+          $dao->section_id = $optionVal['values'][$optionVal['id']]['value'];
+          $dao->report_template_id = $template['id'];
+          $dao->find(TRUE);
+          $dao->save();
+          $dao->free();
+        }
+      }
+    }
+
+    $instanceSections = [
+      $contribComponent => [
+        "Contribution History by Campaign" => [
+          "Contribution History by Campaign (Summary)",
+          "Contribution History by Campaign (Detailed)",
+          "Contribution History by Campaign (Monthly)",
+          "Contribution History by Campaign (Yearly)",
+        ],
+        "Contribution History by Campaign Group" => [
+          "Contribution History by Campaign Group (Summary)",
+          "Contribution History by Campaign Group (Detailed)",
+        ],
+        "Contribution History by Fund" => [
+          "Contribution History by CH Fund (Summary)",
+          "Contribution History by Fund (Summary)",
+          "Contribution History by Fund (Detailed)",
+          "Contribution History by Fund (Monthly)",
+          "Contribution History by Fund (Yearly)",
+        ],
+        "Contribution History by GL Account" => [
+          "Contribution History by GL Account (Summary)",
+          "Contribution History by GL Account (Detailed)",
+        ],
+        "Custom Contribution Reports" => [],
+      ],
+      $contactComponent => [
+        "Custom Contact Reports" => []
+      ],
+      $opportunityComponent => [
+        "Custom Opportunity Reports" => [],
+      ]
+    ];
+    foreach ($instanceSections as $component => $sectionHeader) {
+      foreach ($sectionHeader as $instanceTitle) {
+        $optionVal = civicrm_api3('OptionValue', 'create', [
+          'option_group_id' => 'component_section',
+          'label' => $sectionHeader,
+          'component_id' => $component,
+        ]);
+        if (!empty($instanceTitle)) {
+          $instance = civicrm_api3("ReportInstance", "get", [
+            "sequential" => 1,
+            "title" => $instanceTitle,
+          ]);
+          if (!empty($instance['id']) && $optionVal['id']) {
+            $dao = new CRM_Reportorganizer_DAO_ReportOrganizer();
+            $dao->component_id = $component;
+            $dao->section_id = $optionVal['values'][$optionVal['id']]['value'];
+            $dao->report_instance_id = $instance['id'];
+            $dao->find(TRUE);
+            $dao->save();
+            $dao->free();
+          }
+        }
+      }
+    }
+
+    // Now do the actual entries for the sections.
+
+  }
 
   /**
    * Example: Run an external SQL script when the module is uninstalled.
