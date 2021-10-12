@@ -12,4 +12,12 @@
     <title>ReportTemplateList</title>
     <access_arguments>access CiviCRM</access_arguments>
   </item>
+  <item>
+    <path>civicrm/report/template/list</path>
+    <page_callback>CRM_Reportorganizer_Page_ReportTemplateList</page_callback>
+    <title>ReportTemplateList</title>
+    <access_arguments>administer Reports</access_arguments>
+    <page_type>1</page_type>
+    <weight>1220</weight>
+  </item>
 </menu>

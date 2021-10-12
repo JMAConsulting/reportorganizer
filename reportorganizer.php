@@ -35,10 +35,10 @@ function reportorganizer_civicrm_install() {
   $check = CRM_Core_DAO::singleValueQuery("SELECT id FROM civicrm_component WHERE name = 'CiviContact'");
   if (!$check) {
     CRM_Core_DAO::executeQuery("INSERT INTO civicrm_component (name, namespace) VALUES ('CiviContact', 'CRM_Contact')");
-    $cid = CRM_Core_DAO::singleValueQuery("SELECT id FROM civicrm_component WHERE name = 'CiviContact'");
-    // Update report templates to include component ID for CiviContact.
-    R::updateReportTemplates($cid);
+    $check = CRM_Core_DAO::singleValueQuery("SELECT id FROM civicrm_component WHERE name = 'CiviContact'");
   }
+  // Update report templates to include component ID for CiviContact.
+  R::updateReportTemplates($check);
   R::renameReportInstances();
   R::renameReportTemplates();
   $templateCheck = civicrm_api3('OptionGroup', 'get', ['name' => 'component_template_section']);

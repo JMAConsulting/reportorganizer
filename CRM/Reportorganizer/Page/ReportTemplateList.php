@@ -56,7 +56,13 @@ LEFT  JOIN civicrm_component comp
     $dao = CRM_Core_DAO::executeQuery($sql);
     $rows = [];
     $config = CRM_Core_Config::singleton();
-    $sectionLabels = CRM_Core_OptionGroup::values('component_template_section');
+    $sections = civicrm_api3('OptionValue', 'get', [
+      'sequential' => 1,
+      'option_group_id' => "component_template_section",
+    ]);
+    foreach ($sections['values'] as $section) {
+      $sectionLabels[$section['value']] = $section['label'];
+    }
     while ($dao->fetch()) {
       if ($dao->component_name != 'Contact' && $dao->component_name != $dao->grouping &&
         !in_array("Civi{$dao->component_name}", $config->enableComponents)
