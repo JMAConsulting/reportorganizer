@@ -85,10 +85,10 @@ class CRM_Reportorganizer_Upgrader extends CRM_Reportorganizer_Upgrader_Base {
       ],
     ];
     foreach ($templateSections as $component => $sectionHeader) {
-      foreach($sectionHeader as $reportTemplate) {
+      foreach($sectionHeader as $header => $reportTemplate) {
         $optionVal = civicrm_api3('OptionValue', 'create', [
           'option_group_id' => 'component_template_section',
-          'label' => $sectionHeader,
+          'label' => $header,
           'component_id' => $component,
         ]);
         // Fetch the report template by label.
@@ -141,10 +141,10 @@ class CRM_Reportorganizer_Upgrader extends CRM_Reportorganizer_Upgrader_Base {
       ]
     ];
     foreach ($instanceSections as $component => $sectionHeader) {
-      foreach ($sectionHeader as $instanceTitle) {
+      foreach ($sectionHeader as $header => $instanceTitle) {
         $optionVal = civicrm_api3('OptionValue', 'create', [
           'option_group_id' => 'component_section',
-          'label' => $sectionHeader,
+          'label' => $header,
           'component_id' => $component,
         ]);
         if (!empty($instanceTitle)) {
