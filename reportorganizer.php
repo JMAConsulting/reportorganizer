@@ -85,6 +85,7 @@ function reportorganizer_civicrm_post($op, $objectName, $objectId, &$objectRef) 
         INNER JOIN civicrm_option_group g ON g.id = v.option_group_id AND g.name = 'component_section'
         WHERE v.component_id = %1 AND v.label LIKE 'Custom%'", [1 => [$componentId, 'Integer']]);
         $dao->report_instance_id = $objectId;
+        $dao->save();
       }
     }
   }

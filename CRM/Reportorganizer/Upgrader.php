@@ -168,6 +168,58 @@ class CRM_Reportorganizer_Upgrader extends CRM_Reportorganizer_Upgrader_Base {
         }
       }
     }
+
+    // Add the remainder of the report instances to custom section.
+    $excludeReports = [
+      $contactComponent => [
+        "Contact Report (Detailed)",
+        "Activity Report",
+        "New Email Replies",
+        "Relationship Report",
+      ],
+      $contribComponent => [
+        "Contribution History by Campaign (Summary)",
+        "Contribution History by Campaign (Detailed)",
+        "Contribution History by Campaign (Monthly)",
+        "Contribution History by Campaign (Yearly)",
+        "Contribution History by Campaign Group (Summary)",
+        "Contribution History by Campaign Group (Detailed)",
+        "Contribution History by CH Fund (Summary)",
+        "Contribution History by Fund (Summary)",
+        "Contribution History by Fund (Detailed)",
+        "Contribution History by Fund (Monthly)",
+        "Contribution History by Fund (Yearly)",
+        "Contribution History by GL Account (Summary)",
+        "Contribution History by GL Account (Detailed)",
+        "Contribution History by Source (Summary)",
+        "Recurring Contributions (Summary)",
+        "Receipts",
+      ],
+      $opportunityComponent => [
+        "Opportunity Report",
+      ]
+    ];
+    foreach ($excludeReports as $component => $reportsToExclude) {
+      $sql = "SELECT r.id FROM civicrm_report_instance r
+      INNER JOIN civicrm_option_value v ON r.report_id = v.value
+      INNER JOIN civicrm_option_group g ON g.id = v.option_group_id AND g.name = 'report_template'
+      WHERE r.title NOT IN ('" . implode("', '", $reportsToExclude) . "')
+      AND v.component_id = %1";
+      $customReports = CRM_Core_DAO::executeQuery($sql, [1 => [$component, 'Integer']])->fetchAll();
+      foreach ($customReports as $customReport) {
+        $dao = new CRM_Reportorganizer_DAO_ReportOrganizer();
+        $dao->report_instance_id = $customReport['id'];
+        $dao->find(TRUE);
+        $dao->component_id = $component;
+        $dao->section_id = CRM_Core_DAO::singleValueQuery("SELECT v.value
+        FROM civicrm_option_value v
+        INNER JOIN civicrm_option_group g ON g.id = v.option_group_id AND g.name = 'component_section'
+        WHERE v.component_id = %1 AND v.label LIKE 'Custom%'", [1 => [$component, 'Integer']]);
+        $dao->report_instance_id = $customReport['id'];
+        $dao->save();
+        $dao->free();
+      }
+    }
   }
 
   /**
