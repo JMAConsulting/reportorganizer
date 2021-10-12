@@ -50,9 +50,6 @@ function reportorganizer_civicrm_install() {
       'is_active' => 1,
       'is_locked' => 1,
     ]);
-    civicrm_api3('OptionValue', 'create', [
-      'option_group_id' => "component_template_section",
-    ]);
   }
   $instanceCheck = civicrm_api3('OptionGroup', 'get', ['name' => 'component_section']);
   if (empty($instanceCheck['values'])) {
@@ -62,9 +59,6 @@ function reportorganizer_civicrm_install() {
       'is_reserved' => 1,
       'is_active' => 1,
       'is_locked' => 1,
-    ]);
-    civicrm_api3('OptionValue', 'create', [
-      'option_group_id' => "component_section",
     ]);
   }
   _reportorganizer_civix_civicrm_install();

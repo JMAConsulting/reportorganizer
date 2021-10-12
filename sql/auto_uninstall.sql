@@ -15,7 +15,7 @@
 
 SET FOREIGN_KEY_CHECKS=0;
 
-DROP TABLE IF EXISTS `civicrm_report_template_organizer`;
+DROP TABLE IF EXISTS `civicrm_report_organizer_template`;
 DROP TABLE IF EXISTS `civicrm_report_instance_organizer`;
 
 SET FOREIGN_KEY_CHECKS=1;

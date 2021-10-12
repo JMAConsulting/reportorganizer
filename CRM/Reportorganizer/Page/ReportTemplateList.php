@@ -42,7 +42,7 @@ INNER JOIN civicrm_option_group g
         ON (v.option_group_id = g.id AND g.name = 'report_template')
 LEFT  JOIN civicrm_report_instance inst
         ON v.value = inst.report_id
-LEFT JOIN civicrm_report_template_organizer r
+LEFT JOIN civicrm_report_organizer_template r
         ON r.report_template_id = v.id AND r.component_id = v.component_id
 LEFT  JOIN civicrm_component comp
         ON v.component_id = comp.id

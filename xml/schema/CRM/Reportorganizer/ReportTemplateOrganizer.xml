@@ -3,7 +3,7 @@
 <table>
   <base>CRM/Reportorganizer</base>
   <class>ReportTemplateOrganizer</class>
-  <name>civicrm_report_template_organizer</name>
+  <name>civicrm_report_organizer_template</name>
   <comment>Table that contains the sections for report templates</comment>
   <log>true</log>
 
