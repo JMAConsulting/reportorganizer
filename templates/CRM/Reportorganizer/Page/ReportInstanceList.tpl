@@ -88,15 +88,6 @@
             {/foreach}
         </div>
 
-        <div class="action-link">
-            {if !empty($templateUrl)}
-                <a href="{$templateUrl}" class="button"><span><i class="crm-i fa-plus-circle" aria-hidden="true"></i> {$newButton}</span></a>
-            {/if}
-            {if !empty($reportUrl)}
-                <a href="{$reportUrl}" class="button"><span>{ts}View All Reports{/ts}</span></a>
-            {/if}
-        </div>
-
     {else}
         <div class="crm-content-block">
             <div class="messages status no-popup">
