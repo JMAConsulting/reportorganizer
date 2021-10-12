@@ -42,7 +42,7 @@ class CRM_Reportorganizer_Upgrader extends CRM_Reportorganizer_Upgrader_Base {
           "LYBNT",
           "Contributions by Organization",
           "Contributions by Household",
-          "Constributions by Relationship",
+          "Contributions by Relationship",
           "Contributions for Bookkeeping",
           "Contributions (Extended, Summary)",
           "Contributions (Detailed)",
@@ -64,7 +64,7 @@ class CRM_Reportorganizer_Upgrader extends CRM_Reportorganizer_Upgrader_Base {
       $contactComponent => [
         "General Contact Reports" => [
           "Contacts (Summary)",
-          "Contacts (Detailled)",
+          "Contacts (Detailed)",
           "Contacts (Detailed)",
           "Contacts (Extended, Pivot Chart)",
           "Database Log",
@@ -72,7 +72,7 @@ class CRM_Reportorganizer_Upgrader extends CRM_Reportorganizer_Upgrader_Base {
         ],
         "Activity Reports" => [
           "Activities (Summary)",
-          "Activities (Detailled)",
+          "Activities (Detailed)",
           "Activities (Extended)",
           "Activities (Extended, Pivot Chart)",
           "Activities (Detailed)",
@@ -164,9 +164,6 @@ class CRM_Reportorganizer_Upgrader extends CRM_Reportorganizer_Upgrader_Base {
         }
       }
     }
-
-    // Now do the actual entries for the sections.
-
   }
 
   /**
