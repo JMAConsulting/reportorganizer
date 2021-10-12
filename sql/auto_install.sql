@@ -46,7 +46,6 @@ CREATE TABLE `civicrm_report_instance_organizer` (
 )
 ENGINE=InnoDB;
 
-
 -- /*******************************************************
 -- *
 -- * civicrm_report_template_organizer
