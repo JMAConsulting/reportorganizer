@@ -121,7 +121,7 @@ class CRM_Reportorganizer_Page_ReportInstanceList extends CRM_Core_Page {
       'option_group_id' => "component_section",
     ]);
     foreach ($sections['values'] as $section) {
-      $sectionLabels[$section['value']] = ts($section['label']);
+      $sectionLabels[$section['value']] = $section['label'];
     }
     while ($dao->fetch()) {
       if (in_array($dao->report_id, self::$_exceptions)) {

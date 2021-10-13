@@ -61,7 +61,7 @@ LEFT  JOIN civicrm_component comp
       'option_group_id' => "component_template_section",
     ]);
     foreach ($sections['values'] as $section) {
-      $sectionLabels[$section['value']] = ts($section['label']);
+      $sectionLabels[$section['value']] = $section['label'];
     }
     while ($dao->fetch()) {
       if ($dao->component_name != 'Contact' && $dao->component_name != $dao->grouping &&
