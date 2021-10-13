@@ -20,7 +20,7 @@
         <div class="crm-block crm-form-block crm-report-instanceList-form-block">
             {counter start=0 skip=1 print=false}
             {foreach from=$list item=comrows key=comreport}
-                <div class="crm-accordion-wrapper crm-accordion_{$comreport}-accordion ">
+                <div class="crm-accordion-wrapper crm-accordion_{$comreport}-accordion collapsed">
                     <div class="crm-accordion-header">
                         {if isset($title)}{$title}{elseif $comreport EQ 'Contribute'}{ts}Contribution Reports{/ts}{else}{ts 1=$comreport}%1 Reports{/ts}{/if}
                     </div><!-- /.crm-accordion-header -->
@@ -28,7 +28,7 @@
                         {foreach from=$comrows item=controlrows key=control}
                             {if $control eq 'accordion'}<!-- Sub Sections -->
                                 {foreach from=$controlrows item=rows key=report}
-                                  <div class="crm-accordion-wrapper crm-accordion_{$report}-accordion ">
+                                  <div class="crm-accordion-wrapper crm-accordion_{$report}-accordion collapsed">
                                     <div class="crm-accordion-header">
                                       {$report}
                                     </div><!-- /.crm-accordion-header -->
