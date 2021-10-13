@@ -61,7 +61,7 @@ LEFT  JOIN civicrm_component comp
       'option_group_id' => "component_template_section",
     ]);
     foreach ($sections['values'] as $section) {
-      $sectionLabels[$section['value']] = $section['label'];
+      $sectionLabels[$section['value']] = ts($section['label']);
     }
     while ($dao->fetch()) {
       if ($dao->component_name != 'Contact' && $dao->component_name != $dao->grouping &&
@@ -73,22 +73,23 @@ LEFT  JOIN civicrm_component comp
       if ($dao->section_id) {
         $report_sub_grouping = $sectionLabels[$dao->section_id];
       }
+      $componentName = ts($dao->component_name);
       if ($report_sub_grouping) {
-        $rows[$dao->component_name]['accordion'][$report_sub_grouping][$dao->value]['title'] = ts($dao->label);
-        $rows[$dao->component_name]['accordion'][$report_sub_grouping][$dao->value]['description'] = ts($dao->description);
-        $rows[$dao->component_name]['accordion'][$report_sub_grouping][$dao->value]['url'] = CRM_Utils_System::url('civicrm/report/' . trim($dao->value, '/'), 'reset=1');
+        $rows[$componentName]['accordion'][$report_sub_grouping][$dao->value]['title'] = ts($dao->label);
+        $rows[$componentName]['accordion'][$report_sub_grouping][$dao->value]['description'] = ts($dao->description);
+        $rows[$componentName]['accordion'][$report_sub_grouping][$dao->value]['url'] = CRM_Utils_System::url('civicrm/report/' . trim($dao->value, '/'), 'reset=1');
         if ($dao->instance_id) {
-          $rows[$dao->component_name]['accordion'][$report_sub_grouping][$dao->value]['instanceUrl'] = CRM_Utils_System::url('civicrm/report/list',
+          $rows[$componentName]['accordion'][$report_sub_grouping][$dao->value]['instanceUrl'] = CRM_Utils_System::url('civicrm/report/list',
             "reset=1&ovid={$dao->id}"
           );
         }
       }
       else {
-        $rows[$dao->component_name]['no_accordion'][$dao->value]['title'] = ts($dao->label);
-        $rows[$dao->component_name]['no_accordion'][$dao->value]['description'] = ts($dao->description);
-        $rows[$dao->component_name]['no_accordion'][$dao->value]['url'] = CRM_Utils_System::url('civicrm/report/' . trim($dao->value, '/'), 'reset=1');
+        $rows[$componentName]['no_accordion'][$dao->value]['title'] = ts($dao->label);
+        $rows[$componentName]['no_accordion'][$dao->value]['description'] = ts($dao->description);
+        $rows[$componentName]['no_accordion'][$dao->value]['url'] = CRM_Utils_System::url('civicrm/report/' . trim($dao->value, '/'), 'reset=1');
         if ($dao->instance_id) {
-          $rows[$dao->component_name]['no_accordion'][$dao->value]['instanceUrl'] = CRM_Utils_System::url('civicrm/report/list',
+          $rows[$componentName]['no_accordion'][$dao->value]['instanceUrl'] = CRM_Utils_System::url('civicrm/report/list',
             "reset=1&ovid={$dao->id}"
           );
         }

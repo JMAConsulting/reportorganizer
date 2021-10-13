@@ -121,7 +121,7 @@ class CRM_Reportorganizer_Page_ReportInstanceList extends CRM_Core_Page {
       'option_group_id' => "component_section",
     ]);
     foreach ($sections['values'] as $section) {
-      $sectionLabels[$section['value']] = $section['label'];
+      $sectionLabels[$section['value']] = ts($section['label']);
     }
     while ($dao->fetch()) {
       if (in_array($dao->report_id, self::$_exceptions)) {
@@ -152,9 +152,9 @@ class CRM_Reportorganizer_Page_ReportInstanceList extends CRM_Core_Page {
           $this->title = ts("Report(s) created from the template: %1", [1 => $dao->label]);
         }
 
-        $report_grouping = $dao->compName;
+        $report_grouping = ts($dao->compName);
         if ($dao->owner_id != NULL) {
-          $report_grouping = $my_reports_grouping;
+          $report_grouping = ts($my_reports_grouping);
         }
         $report_sub_grouping = NULL;
         if ($dao->section_id) {
