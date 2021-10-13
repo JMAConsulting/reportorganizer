@@ -65,7 +65,7 @@ function reportorganizer_civicrm_install() {
 }
 
 function reportorganizer_civicrm_post($op, $objectName, $objectId, &$objectRef) {
-  if ($objectName == "ReportInstance") {
+  if ($objectName == "ReportInstance" && empty($objectRef->owner_id)) {
     // Check to see if we have a match in our table.
     $dao = new CRM_Reportorganizer_DAO_ReportOrganizer();
     $dao->report_instance_id = $objectId;
