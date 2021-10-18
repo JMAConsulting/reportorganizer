@@ -191,6 +191,20 @@ class CRM_Reportorganizer_Page_ReportInstanceList extends CRM_Core_Page {
         $row = ['accordion' => $accordion] + $row;
       }
     }
+    $contributionSectionOrder = [
+      'Contribution History by Campaign',
+      'Contribution History by Campaign Group',
+      'Contribution History by Fund',
+      'Contribution History by GL Account',
+      'Custom Contribution Reports',
+    ];
+    $sortedSections = [];
+    foreach ($contributionSectionOrder as $order) {
+      if (array_key_exists($order, $rows['Contribute']['accordion'])) {
+        $sortedSections[$order] = $rows['Contribute']['accordion'][$order];
+      }
+    }
+    $rows['Contribute']['accordion'] = $sortedSections;
     return $rows;
   }
 
