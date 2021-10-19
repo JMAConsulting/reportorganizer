@@ -205,7 +205,24 @@ class CRM_Reportorganizer_Page_ReportInstanceList extends CRM_Core_Page {
       }
     }
     $rows['Contribute']['accordion'] = $sortedSections;
+    $contribNoAccordionOrder = [
+      'Contribution History by Source (Summary)',
+      'Recurring Contributions (Summary)',
+      'Receipts',
+    ];
+    $sortedSections = [];
+    foreach ($contribNoAccordionOrder as $order) {
+      foreach ($rows['Contribute']['no_accordion'] as $k => $v) {
+        if ($order == $v['title']) {
+          $sortedSections[$k] = $rows['Contribute']['no_accordion'][$k];
+        }
+      }
+    }
+    $rows['Contribute']['no_accordion'] = $sortedSections;
     return $rows;
+  }
+
+  public function noAccordionSorter() {
   }
 
   /**
