@@ -196,6 +196,7 @@ class CRM_Reportorganizer_Page_ReportInstanceList extends CRM_Core_Page {
     }
 
     // Handle sorting of reserved sections
+    $sortedSections = [];
     $contributionSectionOrder = [
       'Contribution History by Campaign',
       'Contribution History by Campaign Group',
@@ -209,6 +210,7 @@ class CRM_Reportorganizer_Page_ReportInstanceList extends CRM_Core_Page {
     }
 
     // Handle sorting of reserved instances
+    $sortedSections = [];
     $contribNoAccordionOrder = [
       'Contribution History by Source (Summary)',
       'Recurring Contributions (Summary)',
@@ -218,6 +220,7 @@ class CRM_Reportorganizer_Page_ReportInstanceList extends CRM_Core_Page {
     if (!empty($sortedSections)) {
       $rows['Contribute']['no_accordion'] = $sortedSections;
     }
+    $sortedSections = [];
     $contactNoAccordionOrder = [
       "Contact Report (Detailed)",
       "Activity Report",
@@ -272,6 +275,7 @@ class CRM_Reportorganizer_Page_ReportInstanceList extends CRM_Core_Page {
       ],
     ];
     foreach ($instanceSections as $header => $sortOrder) {
+      $sortedSections = [];
       $sortedSections = CRM_Reportorganizer_Utils::insideAccordionSorter('Contribute', $header, $sortOrder, $rows);
       if (!empty($sortedSections)) {
         $rows['Contribute'][$header]['accordion'] = $sortedSections;
