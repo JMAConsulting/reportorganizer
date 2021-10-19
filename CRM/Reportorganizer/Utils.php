@@ -2,6 +2,40 @@
 
 class CRM_Reportorganizer_Utils {
 
+  public static function noAccordionSorter($component, $sortOrder, $rows) {
+    $sortedSections = [];
+    foreach ($sortOrder as $order) {
+      foreach ($rows[$component]['no_accordion'] as $k => $v) {
+        if ($order == $v['title']) {
+          $sortedSections[$k] = $rows[$component]['no_accordion'][$k];
+        }
+      }
+    }
+    return $sortedSections;
+  }
+
+  public static function accordionSorter($component, $sortOrder, $rows) {
+    $sortedSections = [];
+    foreach ($sortOrder as $order) {
+      if (array_key_exists($order, $rows[$component]['accordion'])) {
+        $sortedSections[$order] = $rows[$component]['accordion'][$order];
+      }
+    }
+    return $sortedSections;
+  }
+
+  public static function insideAccordionSorter($component, $section, $sortOrder, $rows) {
+    $sortedSections = [];
+    foreach ($sortOrder as $order) {
+      foreach ($rows[$component]['accordion'][$section] as $k => $v) {
+        if ($order == $v['title']) {
+          $sortedSections[$k] = $rows[$component]['accordion'][$section][$k];
+        }
+      }
+    }
+    return $sortedSections;
+  }
+
   public static function updateReportTemplates($componentId) {
     $templates = civicrm_api3('ReportTemplate', 'get', [
       'sequential' => 1,
