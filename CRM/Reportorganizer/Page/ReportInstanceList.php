@@ -278,7 +278,7 @@ class CRM_Reportorganizer_Page_ReportInstanceList extends CRM_Core_Page {
       $sortedSections = [];
       $sortedSections = CRM_Reportorganizer_Utils::insideAccordionSorter('Contribute', $header, $sortOrder, $rows);
       if (!empty($sortedSections)) {
-        $rows['Contribute'][$header]['accordion'] = $sortedSections;
+        $rows['Contribute']['accordion'][$header] = $sortedSections;
       }
     }
     return $rows;
