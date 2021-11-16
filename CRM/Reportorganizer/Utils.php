@@ -2,6 +2,13 @@
 
 class CRM_Reportorganizer_Utils {
 
+  public static function sortArrayByArray(array $toSort, array $sortByValuesAsKeys) {
+    $commonKeysInOrder = array_intersect_key(array_flip($sortByValuesAsKeys), $toSort);
+    $commonKeysWithValue = array_intersect_key($toSort, $commonKeysInOrder);
+    $sorted = array_merge($commonKeysInOrder, $commonKeysWithValue);
+    return $sorted;
+  }
+
   public static function noAccordionSorter($component, $sortOrder, $rows) {
     $sortedSections = [];
     foreach ($sortOrder as $order) {

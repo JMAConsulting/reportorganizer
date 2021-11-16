@@ -269,6 +269,8 @@ class CRM_Reportorganizer_Page_ReportInstanceList extends CRM_Core_Page {
         $rows['Contribute']['accordion'][$header] = $sortedSections;
       }
     }
+
+    $rows = CRM_Reportorganizer_Utils::sortArrayByArray($rows, ["Contribute", "Contact", "Opportunity"]);
     return $rows;
   }
 
