@@ -17,7 +17,7 @@
         {if $list}
             {counter start=0 skip=1 print=false}
             {foreach from=$list item=comrows key=comreport}
-                <div class="crm-accordion-wrapper crm-accordion_{$comreport}-accordion ">
+                <div class="crm-accordion-wrapper crm-accordion_{$comreport}-accordion collapsed">
                     <div class="crm-accordion-header">
                         {if $comreport}{if $comreport EQ 'Contribute'}{ts}Contribution{/ts}{else}{$comreport}{/if}{else}{ts}Contact{/ts}{/if} Report Templates
                     </div><!-- /.crm-accordion-header -->
@@ -25,7 +25,7 @@
                       {foreach from=$comrows item=controlrows key=control}
                           {if $control eq 'accordion'}
                             {foreach from=$controlrows item=rows key=report}
-                              <div class="crm-accordion-wrapper crm-accordion_{$report}-accordion ">
+                              <div class="crm-accordion-wrapper crm-accordion_{$report}-accordion collapsed">
                                 <div class="crm-accordion-header">
                                   {$report}
                                 </div><!-- /.crm-accordion-header -->

@@ -2,6 +2,47 @@
 
 class CRM_Reportorganizer_Utils {
 
+  public static function sortArrayByArray(array $toSort, array $sortByValuesAsKeys) {
+    $commonKeysInOrder = array_intersect_key(array_flip($sortByValuesAsKeys), $toSort);
+    $commonKeysWithValue = array_intersect_key($toSort, $commonKeysInOrder);
+    $sorted = array_merge($commonKeysInOrder, $commonKeysWithValue);
+    return $sorted;
+  }
+
+  public static function noAccordionSorter($component, $sortOrder, $rows) {
+    $sortedSections = [];
+    foreach ($sortOrder as $order) {
+      foreach ($rows[$component]['no_accordion'] as $k => $v) {
+        if ($order == $v['title']) {
+          $sortedSections[$k] = $rows[$component]['no_accordion'][$k];
+        }
+      }
+    }
+    return $sortedSections;
+  }
+
+  public static function accordionSorter($component, $sortOrder, $rows) {
+    $sortedSections = [];
+    foreach ($sortOrder as $order) {
+      if (array_key_exists($order, $rows[$component]['accordion'])) {
+        $sortedSections[$order] = $rows[$component]['accordion'][$order];
+      }
+    }
+    return $sortedSections;
+  }
+
+  public static function insideAccordionSorter($component, $section, $sortOrder, $rows) {
+    $sortedSections = [];
+    foreach ($sortOrder as $order) {
+      foreach ($rows[$component]['accordion'][$section] as $k => $v) {
+        if ($order == $v['title']) {
+          $sortedSections[$k] = $rows[$component]['accordion'][$section][$k];
+        }
+      }
+    }
+    return $sortedSections;
+  }
+
   public static function updateReportTemplates($componentId) {
     $templates = civicrm_api3('ReportTemplate', 'get', [
       'sequential' => 1,
@@ -70,7 +111,7 @@ class CRM_Reportorganizer_Utils {
         "description" => "All Contacts",
       ],
       "Constituent Report (Detail)" => [
-        "label" => "Contacts (Detailed)",
+        "label" => "Contacts (Detailled)",
         "description" => "All Contacts with extra fields",
       ],
       "Extended Report - Flexible contact report" => [
@@ -95,7 +136,7 @@ class CRM_Reportorganizer_Utils {
         "description" => "Total amounts raised",
       ],
       "Contribution Detail Report" => [
-        "label" => "Contributions (Detailed)",
+        "label" => "Contributions (Detailled)",
         "description" => "Total amounts raised with individual Contribution information",
       ],
       "Repeat Contributions Report" => [
@@ -156,7 +197,7 @@ class CRM_Reportorganizer_Utils {
         "description" => "Total amounts raised from Recurring Contributions by each Payment Method",
       ],
       "Recurring Contributions Report" => [
-        "label" => "Recurring Contributions (Detailed)",
+        "label" => "Recurring Contributions (Detailled)",
         "description" => "Total amounts raised for Recurring Contributions",
       ],
       "Extended Report - Recurring Contribution Pivot Chart" => [
@@ -182,7 +223,7 @@ class CRM_Reportorganizer_Utils {
         "description" => "All Activities by type and date information",
       ],
       "Activity Details Report" => [
-        "label" => "Activities (Detailed)",
+        "label" => "Activities (Detailled)",
         "description" => "All Activities",
       ],
       "Extended Report - Activities" => [
@@ -233,7 +274,7 @@ class CRM_Reportorganizer_Utils {
       ],
       // Opportunity Reports
       "Opportunity Report (Detail)" => [
-        "label" => "Opportunity Report (Detailed)",
+        "label" => "Opportunity Report (Detailled)",
         "description" => "All Opportunities",
       ],
       "Opportunity Report (Statistics)" => [

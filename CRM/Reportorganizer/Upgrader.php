@@ -35,7 +35,7 @@ class CRM_Reportorganizer_Upgrader extends CRM_Reportorganizer_Upgrader_Base {
       $contribComponent => [
         "General Contribution Reports" => [
           "Contributions (Summary)",
-          "Contributions (Detailed)",
+          "Contributions (Detailled)",
           "Repeat Contributions",
           "Top Donors",
           "SYBUNT",
@@ -52,7 +52,7 @@ class CRM_Reportorganizer_Upgrader extends CRM_Reportorganizer_Upgrader_Base {
         ],
         "Recurring Contribution Reports" => [
           "Recurring Contributions (Summary)",
-          "Recurring Contributions (Detailed)",
+          "Recurring Contributions (Detailled)",
           "Recurring Contributions (Extended, Pivot Chart)",
           "Recurring Contributions (Detailed)",
         ],
@@ -64,7 +64,7 @@ class CRM_Reportorganizer_Upgrader extends CRM_Reportorganizer_Upgrader_Base {
       $contactComponent => [
         "General Contact Reports" => [
           "Contacts (Summary)",
-          "Contacts (Detailed)",
+          "Contacts (Detailled)",
           "Contacts (Detailed)",
           "Contacts (Extended, Pivot Chart)",
           "Database Log",
@@ -72,7 +72,7 @@ class CRM_Reportorganizer_Upgrader extends CRM_Reportorganizer_Upgrader_Base {
         ],
         "Activity Reports" => [
           "Activities (Summary)",
-          "Activities (Detailed)",
+          "Activities (Detailled)",
           "Activities (Extended)",
           "Activities (Extended, Pivot Chart)",
           "Activities (Detailed)",
