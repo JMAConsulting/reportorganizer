@@ -278,6 +278,7 @@ class CRM_Reportorganizer_Page_ReportInstanceList extends CRM_Core_Page {
    * Run this page (figure out the action needed and perform it).
    */
   public function run() {
+    CRM_Utils_System::setTitle(ts('CanadaHelps DMS Reports'));
     //Filters by source report template or by component
     $this->ovID = CRM_Utils_Request::retrieve('ovid', 'Positive', $this);
     $this->myReports = CRM_Utils_Request::retrieve('myreports', 'String', $this);

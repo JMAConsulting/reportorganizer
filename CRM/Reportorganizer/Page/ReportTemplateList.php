@@ -68,6 +68,14 @@ LEFT  JOIN civicrm_component comp
         'Activities (Extended, Pivot Chart)',
         'Opportunity Report (Detailled)',
         'Opportunity Report (Statistics)',
+	'Membership Report (Summary)',
+	'Membership Report (Detail)',
+	'Membership Report (Lapsed)',
+	'Contribution and Membership Details',
+	'Extended Report - Pivot data membership report',
+	'Extended Report - Membership Price Set Report',
+	'Survey Report (Detail)',
+	'Extended Report - Campaign progress',
       ];
       if (!$all) {
         $hideClause = " AND ";
@@ -251,6 +259,7 @@ LEFT  JOIN civicrm_component comp
    * Run this page (figure out the action needed and perform it).
    */
   public function run() {
+    CRM_Utils_System::setTitle(ts('Create New Report from Template'));
     $compID = CRM_Utils_Request::retrieve('compid', 'Positive', $this);
     $grouping = CRM_Utils_Request::retrieve('grp', 'String', $this);
     $rows = self::info($compID, $grouping);
