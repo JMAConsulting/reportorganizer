@@ -203,6 +203,24 @@ function reportorganizer_civicrm_themes(&$themes) {
   _reportorganizer_civix_civicrm_themes($themes);
 }
 
+function reportorganizer_civicrm_buildForm($formName, &$form) {
+  if ($formName == "CRM_Event_Form_ManageEvent_ScheduleReminders" && !$form->getVar('_isTemplate')) {
+    //$current_user = \Drupal::currentUser();
+    $roles = ['administrator'];//$current_user->getRoles();
+    $createdId = $form->_defaultValues['created_id'];
+    $loggedInCid = CRM_Core_Session::singleton()->getLoggedInContactID();
+    if ((!array_search('administrator', $roles) && !array_search('senior_staff', $roles))
+      && ($createdId != $loggedInCid)) {
+      CRM_Core_Resources::singleton()->addScript(
+        "CRM.$(function($) {
+           $('.action-link').hide();
+           $('.crm-scheduleReminders-is_active').next('td').hide();
+        });"
+      );
+    }
+  }
+}
+
 // --- Functions below this ship commented out. Uncomment as required. ---
 
 /**

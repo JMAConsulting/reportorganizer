@@ -242,7 +242,7 @@ LEFT  JOIN civicrm_component comp
         $rows['Contact']['accordion'][$header] = $sortedSections;
       }
     }
-    
+
     $rows = CRM_Reportorganizer_Utils::sortArrayByArray($rows, ["Contribute", "Contact", "Mail", "Opportunity", "Member", "Campaign Group"]);
     return $rows;
   }
