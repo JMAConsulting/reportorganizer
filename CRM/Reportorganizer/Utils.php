@@ -312,6 +312,8 @@ class CRM_Reportorganizer_Utils {
     $contactComponent = CRM_Core_DAO::singleValueQuery("SELECT id FROM civicrm_component WHERE name = 'CiviContact'");
     $opportunityComponent = CRM_Core_DAO::singleValueQuery("SELECT id FROM civicrm_component WHERE name = 'CiviGrant'");
 
+    self::updateReportTemplates($contactComponent);
+
     // Add entries in component report template section.
     $templateSections = [
       $contribComponent => [
