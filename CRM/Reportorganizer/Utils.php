@@ -374,20 +374,22 @@ class CRM_Reportorganizer_Utils {
           'component_id' => $component,
           'sequential' => 1,
         ]);
-        foreach ($reportTemplate as $reportTitle) {
-          // Fetch the report template by label.
-          $template = civicrm_api3("ReportTemplate", "get", [
-            "sequential" => 1,
-            "label" => $reportTitle,
-          ]);
-          if (!empty($optionVal['id']) && !empty($template['id'])) {
-            $dao = new CRM_Reportorganizer_BAO_ReportTemplateOrganizer();
-            $dao->component_id = $component;
-            $dao->section_id = $optionVal['values'][0]['value'];
-            $dao->report_template_id = $template['id'];
-            $dao->find(TRUE);
-            $dao->save();
-            $dao->free();
+        if (!empty($optionVal['id'])) {
+          foreach ($reportTemplate as $reportTitle) {
+            // Fetch the report template by label.
+            $template = civicrm_api3("ReportTemplate", "get", [
+              "sequential" => 1,
+              "label" => $reportTitle,
+            ]);
+            if (!empty($template['id'])) {
+              $dao = new CRM_Reportorganizer_BAO_ReportTemplateOrganizer();
+              $dao->component_id = $component;
+              $dao->section_id = $optionVal['values'][0]['value'];
+              $dao->report_template_id = $template['id'];
+              $dao->find(TRUE);
+              $dao->save();
+              $dao->free();
+            }
           }
         }
       }
@@ -433,20 +435,22 @@ class CRM_Reportorganizer_Utils {
           'component_id' => $component,
           'sequential' => 1,
         ]);
-        foreach ($instanceTitles as $instanceTitle) {
-          if (!empty($instanceTitle)) {
-            $instance = civicrm_api3("ReportInstance", "get", [
-              "sequential" => 1,
-              "title" => $instanceTitle,
-            ]);
-            if (!empty($instance['id']) && $optionVal['id']) {
-              $dao = new CRM_Reportorganizer_DAO_ReportOrganizer();
-              $dao->component_id = $component;
-              $dao->section_id = $optionVal['values'][0]['value'];
-              $dao->report_instance_id = $instance['id'];
-              $dao->find(TRUE);
-              $dao->save();
-              $dao->free();
+        if (!empty($optionVal['id'])) {
+          foreach ($instanceTitles as $instanceTitle) {
+            if (!empty($instanceTitle)) {
+              $instance = civicrm_api3("ReportInstance", "get", [
+                "sequential" => 1,
+                "title" => $instanceTitle,
+              ]);
+              if (!empty($instance['id'])) {
+                $dao = new CRM_Reportorganizer_DAO_ReportOrganizer();
+                $dao->component_id = $component;
+                $dao->section_id = $optionVal['values'][0]['value'];
+                $dao->report_instance_id = $instance['id'];
+                $dao->find(TRUE);
+                $dao->save();
+                $dao->free();
+              }
             }
           }
         }
