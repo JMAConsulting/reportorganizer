@@ -383,7 +383,7 @@ class CRM_Reportorganizer_Utils {
           if (!empty($optionVal['id']) && !empty($template['id'])) {
             $dao = new CRM_Reportorganizer_BAO_ReportTemplateOrganizer();
             $dao->component_id = $component;
-            $dao->section_id = $optionVal['values'][$optionVal['id']]['value'];
+            $dao->section_id = $optionVal['values'][0]['value'];
             $dao->report_template_id = $template['id'];
             $dao->find(TRUE);
             $dao->save();
@@ -442,7 +442,7 @@ class CRM_Reportorganizer_Utils {
             if (!empty($instance['id']) && $optionVal['id']) {
               $dao = new CRM_Reportorganizer_DAO_ReportOrganizer();
               $dao->component_id = $component;
-              $dao->section_id = $optionVal['values'][$optionVal['id']]['value'];
+              $dao->section_id = $optionVal['values'][0]['value'];
               $dao->report_instance_id = $instance['id'];
               $dao->find(TRUE);
               $dao->save();
