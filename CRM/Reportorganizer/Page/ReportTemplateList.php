@@ -244,6 +244,9 @@ LEFT  JOIN civicrm_component comp
     }
 
     $rows = CRM_Reportorganizer_Utils::sortArrayByArray($rows, ["Contribute", "Contact", "Mail", "Opportunity", "Member", "Campaign Group"]);
+
+    // Hide Campaign Group section
+    unset($rows['Campaign Group']);
     return $rows;
   }
 
