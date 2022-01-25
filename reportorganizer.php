@@ -64,6 +64,17 @@ function reportorganizer_civicrm_install() {
   _reportorganizer_civix_civicrm_install();
 }
 
+function reportorganizer_civicrm_pageRun(&$page) {
+  $pageName = $page->getVar('_name');
+  if (in_array($pageName, ["CRM_Reportorganizer_Page_ReportInstanceList", "CRM_Reportorganizer_Page_ReportTemplateList"])) {
+    CRM_Core_Resources::singleton()->addStyle('
+      .crm-accordion-body {
+        margin-left: 13px;
+      }
+    ');  
+  }
+}
+
 function reportorganizer_civicrm_post($op, $objectName, $objectId, &$objectRef) {
   if ($objectName == "ReportInstance" && !is_numeric($objectRef->owner_id)) {
     // Check to see if we have a match in our table.
