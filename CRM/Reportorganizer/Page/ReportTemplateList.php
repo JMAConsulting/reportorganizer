@@ -143,6 +143,9 @@ LEFT  JOIN civicrm_component comp
       $rows['Contribute']['accordion'] = $sortedSections;
     }
 
+    // CRM-940 Remove all unsorted templates from view
+    unset($rows['Contribute']['no_accordion']);
+
     $contactSectionOrder = [
       'General Contact Reports',
       'Activity Reports',
@@ -152,6 +155,9 @@ LEFT  JOIN civicrm_component comp
     if (!empty($sortedSections)) {
       $rows['Contact']['accordion'] = $sortedSections;
     }
+
+    // CRM-940 Remove all unsorted templates from view
+    unset($rows['Contact']['no_accordion']);
 
     // Handle sorting of reserved instances
     $mailNoAccordionOrder = [
