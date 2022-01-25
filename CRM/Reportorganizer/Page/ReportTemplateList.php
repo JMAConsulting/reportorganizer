@@ -68,6 +68,8 @@ LEFT  JOIN civicrm_component comp
         'Activities (Extended, Pivot Chart)',
         'Opportunity Report (Detailled)',
         'Opportunity Report (Statistics)',
+        'Grant Report (Detailled)',
+        'Grant Report (Statistics)',
       ];
       if (!$all) {
         $hideClause = " AND ";
