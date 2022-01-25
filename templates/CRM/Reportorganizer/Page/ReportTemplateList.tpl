@@ -53,7 +53,7 @@
                               </div>
                             {/foreach}
                           {else}
-                              {foreach from=$controlrows item=row}
+                             {foreach from=$controlrows item=row}
                                 <div class="boxBlock">
                                   <table class="report-layout">
                                     <tr id="row_{counter}" class="crm-report-templateList">
