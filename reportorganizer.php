@@ -214,6 +214,20 @@ function reportorganizer_civicrm_themes(&$themes) {
   _reportorganizer_civix_civicrm_themes($themes);
 }
 
+/**
+ * Implements hook_civicrm_entityRefFilters().
+ */
+function reportorganizer_civicrm_entityRefFilters(&$filters, &$links) {
+  $contactFilters = CRM_Contact_BAO_Contact::getEntityRefFilters();
+  $contactLinks = CRM_Contact_BAO_Contact::getEntityRefCreateLinks();
+  if ($contactFilters) {
+    $filters['Contact'] = $contactFilters;
+  }
+  if ($contactLinks) {
+    $links['Contact'] = $contactLinks;
+  }
+}
+
 // --- Functions below this ship commented out. Uncomment as required. ---
 
 /**
