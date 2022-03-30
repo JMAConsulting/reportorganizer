@@ -71,7 +71,42 @@ function reportorganizer_civicrm_pageRun(&$page) {
       .crm-accordion-body {
         margin-left: 13px;
       }
-    ');  
+    ');
+  }
+}
+
+function reportorganizer_civicrm_buildForm($formName, &$form) {
+  $class = class_parents($formName);
+  if (array_search("CRM_Report_Form", $class)) {
+    CRM_Core_Region::instance('page-body')->add(array(
+      'script' => "
+      CRM.$(function($) {
+        $('#crm-container').on('change', 'select#task', function() {
+          setTimeout(function waitConfirm() {
+            $('.crm-confirm').find('#add_to_my_reports').change(function() {
+              if ($(this).is(':checked')) {
+                $('#add_to_my_reports').prop('checked', true);
+              }
+              else {
+                $('#add_to_my_reports').prop('checked', false);
+              }
+            });
+          }, 250);
+        });
+      });
+      ",
+    ));
+  }
+}
+
+function reportorganizer_civicrm_alterReportVar($varType, &$var, $reportForm) {
+  if ($varType == 'actions' && !empty($var['report_instance.copy'])) {
+    $confirmFields = json_decode($var['report_instance.copy']['data']['confirm_refresh_fields'], TRUE);
+    $confirmFields['add_to_my_reports'] = [
+      'selector' => '.crm-report-instanceForm-form-block-add-to-my-reports',
+      'prepend' => '',
+    ];
+    $var['report_instance.copy']['data']['confirm_refresh_fields'] = json_encode($confirmFields);
   }
 }
 
