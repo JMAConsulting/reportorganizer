@@ -443,6 +443,7 @@ class CRM_Reportorganizer_Utils {
               $instance = civicrm_api3("ReportInstance", "get", [
                 "sequential" => 1,
                 "title" => $instanceTitle,
+                "owner_id" => ["IS NULL" => 1],
               ]);
               if (!empty($instance['id'])) {
                 $dao = new CRM_Reportorganizer_DAO_ReportOrganizer();
@@ -494,7 +495,7 @@ class CRM_Reportorganizer_Utils {
       INNER JOIN civicrm_option_value v ON r.report_id = v.value
       INNER JOIN civicrm_option_group g ON g.id = v.option_group_id AND g.name = 'report_template'
       WHERE r.title NOT IN ('" . implode("', '", $reportsToExclude) . "')
-      AND v.component_id = %1";
+      AND v.component_id = %1 AND r.owner_id IS NULL";
       $customReports = CRM_Core_DAO::executeQuery($sql, [1 => [$component, 'Integer']])->fetchAll();
       foreach ($customReports as $customReport) {
         $dao = new CRM_Reportorganizer_DAO_ReportOrganizer();
